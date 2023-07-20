@@ -22,7 +22,7 @@ fetch(url)
 
 // Render
 data = {
-    message: `Hello from <strong>${data[0].username}</strong>.`
+    message: `Hello from <strong>${data[0]}</strong>.`
 };
 
 point.attach("welcome", data);
