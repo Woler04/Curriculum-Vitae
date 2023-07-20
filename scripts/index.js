@@ -3,33 +3,37 @@ const api_url =
     "https://localhost:7142/api/User";
 
 let resData;
+
 // Defining async function
-async function fetchData() {
-    try {
-        const response = await fetch('https://localhost:7142/api/User');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return null;
-    }
+function setup() {
+    url = 'https://localhost:7142/api/User';
+    getJSON(url,
+        function (err, data) {
+            if (err !== null) {
+                console.log('Something went wrong: ' + err);
+            } else {
+                resData = data;
+                console.log(resData);
+            }
+        });
 }
 
-// Usage example
-fetchData()
-    .then(data => {
-        if (data) {
-            console.log('Data:', data);
-            resData = data;
-            // Process the data here
+var getJSON = function (url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.send();
+    xhr.onload = function () {
+        var status = xhr.status;
+        if (status === 200) {
+            callback(null, xhr.response);
+        } else {
+            callback(status, xhr.response);
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    };
+};
+
+setup();
 
 // Render
 data = {
