@@ -1,43 +1,28 @@
-// api url
-const api_url =
-    "https://localhost:7142/api/User";
+const url = 'https://localhost:7142/api/User';
+let data;
+let responceData;
 
-let resData;
-
-// Defining async function
-function setup() {
-    url = 'https://localhost:7142/api/User';
-    getJSON(url,
-        function (err, data) {
-            if (err !== null) {
-                console.log('Something went wrong: ' + err);
-            } else {
-                resData = data;
-                console.log(resData);
-            }
-        });
-}
-
-var getJSON = function (url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'json';
-    xhr.send();
-    xhr.onload = function () {
-        var status = xhr.status;
-        if (status === 200) {
-            callback(null, xhr.response);
-        } else {
-            callback(status, xhr.response);
-        }
-    };
-};
-
-setup();
+// Making the GET request using the fetch API
+fetch(url)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // Parse the response body as JSON
+  })
+  .then(data => {
+    // Do something with the data received from the server
+    console.log(data);
+    responceData = data;
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the request
+    console.error('Error fetching data:', error);
+  });
 
 // Render
 data = {
-    message: `Hello from <strong>a</strong>.`
+    message: `Hello from <strong>${data[0].username}</strong>.`
 };
 
 point.attach("welcome", data);
