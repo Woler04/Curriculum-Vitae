@@ -1,4 +1,4 @@
-const url = 'https://api.example.com/data';
+const url = 'https://localhost:7142/api/User';
 let data;
 let responceData;
 
@@ -22,7 +22,7 @@ fetch(url)
 
 // Render
 data = {
-    message: `Hello from <strong>${responceData[0].username}</strong>.`
+    message: `Hello from <strong>${data[0].username}</strong>.`
 };
 
 point.attach("welcome", data);
